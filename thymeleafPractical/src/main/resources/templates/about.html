@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+<meta charset="ISO-8859-1">
+<title> Document</title>
+</head>
+<body>
+<h1>Thymeleaf</h1>
+<h2>Practical Session</h2>	
+
+<h1 th:text="${name}"></h1>
+<h2 th:text="${#strings.toUpperCase(name)}"></h2>
+<h1 th:text="${currentdate}"></h1>
+<h3> Name of owner is <span th:text="${name}"></span></h3>
+<div th:with="a=5,b=67,n=${name}">
+<h1> Value of a is <span th:text="${a}"></span></h1>
+<h1 th:text="'Value of b is '+${b}"></h1>
+<h1>Local Value of n is <span th:text="${n}"></span></h1>
+</div>
+</body>
+</html>	

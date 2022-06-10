@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title> Demo Thymeleaf Iteration</title>
+</head>
+<body>
+<h1> Array Elements</h1>
+<h1 th:text="${names}"></h1>
+<ul>
+<li th:each="n,status:${names}">
+<span th:style="${status.even}?'color:blue;font-weight:bold':'color:red'" th:text="${status.index}+'   '+${n}"></span>
+</li>
+</ul>
+</body>
+</html>
+
+
+
+

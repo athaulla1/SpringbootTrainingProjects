@@ -1,0 +1,17 @@
+<html lang="en">
+<head>
+<meta charset="ISO-8859-1">
+<title> Loop</title>
+</head>
+<body>
+<h1>Array elements</h1>
+<h2>Practical Session</h2>	
+<h1 th:text="${names}"></h1>
+<ul>
+<li th:each="n,status:${names}">
+<span th:style="${status.odd}?'color:blue;font-weight:bold':''"th:text="${status.index}+' '+${n}"></span>
+</li>
+</ul>
+
+</body>
+</html>	

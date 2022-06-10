@@ -1,0 +1,184 @@
+package com.lntedutech.onetomanyrelation;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.lntedutech.onetomanyrelation.entity.Department;
+import com.lntedutech.onetomanyrelation.entity.Employee;
+import com.lntedutech.onetomanyrelation.repository.DeptRepository;
+import com.lntedutech.onetomanyrelation.repository.EmpRepository;
+
+@RestController
+public class EmpController {
+	
+	
+	@Autowired 
+	EmpRepository erepo;
+	
+	@Autowired 
+	DeptRepository drepo;
+	
+	@PostMapping("/adddeptemp")
+	public ResponseEntity<Department> addempdept(@RequestBody Department dept)
+	{
+		
+		drepo.save(dept);
+		return new ResponseEntity<Department>(dept,HttpStatus.CREATED);
+		
+	}
+	
+	@PostMapping("/addempdept")
+	public ResponseEntity<Employee> addempdept(@RequestBody Employee emp)
+	{
+		
+		System.out.println(emp.getDept().getDname() + emp.getDept().getDid());
+		 
+		List<Department> dept1=drepo.findByDname(emp.getDept().getDname());
+		
+		if (dept1.size()==0)
+			emp.setDept(emp.getDept());
+		else
+			emp.setDept(dept1);
+		
+		erepo.save(emp);
+		return new ResponseEntity<Employee>(emp,HttpStatus.CREATED);
+		
+	}
+	
+	
+	
+	/*
+	@PostMapping("/addemp")
+	public ResponseEntity<Employee> addempdept(@RequestBody Employee empreq)
+	{
+		
+		//Department dept = new Department();
+		
+		//dept.setDname(ereq.getDeptname());
+	
+		//dept = drepo.save(dept);
+		
+		
+		Employee emp;;
+		//emp.setEname(ereq.getEmpname());
+		//emp.setDept(dept);
+		
+		emp = erepo.save(empreq);
+		
+		
+		//Cascading...
+		
+		
+		return new ResponseEntity<Employee>(emp,HttpStatus.CREATED);
+		
+		}
+	
+*/
+	
+/*
+	@PostMapping("/addempdept")
+	public ResponseEntity<Employee> addempdept(@RequestBody EmpRequest ereq)
+	{
+		Department dept = new Department();
+		
+		dept.setDname(ereq.getDeptname());
+	
+		//dept = drepo.save(dept);
+		
+		
+		Employee emp = new Employee();
+		emp.setEname(ereq.getEmpname());
+		emp.setDept(dept);
+		
+		emp = erepo.save(emp);
+		
+		
+		//Cascading...
+		
+		
+		return new ResponseEntity<Employee>(emp,HttpStatus.CREATED);
+		
+		}
+	
+	*/
+	
+	@GetMapping("/employee/dept/{dname}")
+	public ResponseEntity<List<Employee>> getEmployeByDepartment(@PathVariable String dname)
+	{
+		
+		//return new ResponseEntity <List<Employee>> (erepo.getEmployeeByDeptName(dname), HttpStatus.OK);
+		
+		return new ResponseEntity <List<Employee>> (erepo.findByDeptDname(dname), HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/employees")
+	public List<Employee> getAllEmployees()
+	{
+		
+		return erepo.getEmployees();
+		
+		//return new ResponseEntity <List<Employee>> (erepo.findByDeptDname(dname), HttpStatus.OK);
+	}
+	
+
+	/*
+	@GetMapping("/departments")
+	public List<DepartmentResponse> getDepartments()
+	{
+		List<Department> depts = drepo.findAll();
+		
+		
+		List<DepartmentResponse> dresps = new ArrayList<>();
+		
+		depts.forEach(dept ->
+		{
+			DepartmentResponse dresp = new DepartmentResponse();
+			
+			dresp.setDname(dept.getDname());
+			dresp.setId(dept.getDid());
+			dresp.setEname(dept.getEmp().getEname());
+			dresps.add(dresp);
+			
+		});
+		
+		return dresps;
+		
+	} */
+	
+	@DeleteMapping("/deleteemp/{id}")       
+	public ResponseEntity<Void> delete(@PathVariable("id") Long id)
+	{
+		try
+		{
+		erepo.deleteById(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("Exception");
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();	
+		}
+		
+	}
+
+	
+	
+   
+}
+	
+
+
+	

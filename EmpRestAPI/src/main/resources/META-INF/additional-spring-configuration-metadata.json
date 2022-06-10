@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "EmpRestApi.services.url",
+    "type": "java.lang.String",
+    "description": "A description for 'EmpRestApi.services.url'"
+  },
+  {
+    "name": "EmpRestAPI.services.url",
+    "type": "java.lang.String",
+    "description": "A description for 'EmpRestAPI.services.url'"
+  },
+  {
+    "name": "EmpRestAPI.services.url",
+    "type": "java.lang.String",
+    "description": "A description for 'EmpRestAPI.services.url'"
+  },
+  {
+    "name": "EmpRestAPI.services.url",
+    "type": "java.lang.String",
+    "description": "A description for 'EmpRestAPI.services.url'"
+  }
+]}
